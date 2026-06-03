@@ -1,0 +1,16 @@
+# Archivos compilados Java
+*.class
+
+# Carpetas de compilación
+build/
+dist/
+
+# Configuración privada de NetBeans
+nbproject/private/
+
+# Logs
+*.log
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
