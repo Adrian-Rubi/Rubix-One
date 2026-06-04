@@ -6,7 +6,7 @@ import jakarta.servlet.annotation.WebServlet;               // Permite usar la a
 import jakarta.servlet.http.HttpServlet;                            // Clase padre de todos los Servlets HTTP.
 import jakarta.servlet.http.HttpServletRequest;           // Objeto que recibe los datos enviados desde el formulario.
 import jakarta.servlet.http.HttpServletResponse;        // Objeto que permite enviar respuestas al navegador.
-
+import jakarta.servlet.http.HttpSession;
 
 
 // Registramos el Servlet con la URL LoginServlet
@@ -38,10 +38,12 @@ public class LoginServlet extends HttpServlet {
         // Más adelante consultaremos la base de datos.
         if(usuario.equals("admin") && contrasena.equals("1234")){
 
+        HttpSession session = request.getSession() ;
+        session.setAttribute("usuario", usuario);
             
             // Si los datos son correctos
             // redireccionamos a bienvenido.jsp
-            response.sendRedirect("bienvenido.jsp");
+            response.sendRedirect(request.getContextPath() + "/bienvenido.jsp");
 
         }else{
 
