@@ -15,9 +15,12 @@ import java.io.IOException;
 public class AuthFilter implements Filter {
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response,
-                         FilterChain chain)
+    public void doFilter(ServletRequest request,
+                                        ServletResponse response,
+                                        FilterChain chain)
             throws IOException, ServletException {
+        
+        System.out.println(">>> AuthFilter ejecutado");
 
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
@@ -28,7 +31,7 @@ public class AuthFilter implements Filter {
         String requestURI = req.getRequestURI();
 
         HttpSession session = req.getSession(false);
-        boolean loggedIn = (session != null && session.getAttribute("user") != null);
+        boolean loggedIn = (session != null && session.getAttribute("usuario") != null);
 
         // 🔹 Permitir recursos públicos
         boolean isLoginPage = requestURI.equals(loginURI);
@@ -37,10 +40,10 @@ public class AuthFilter implements Filter {
                           || requestURI.contains("/js/")
                           || requestURI.contains("/images/");
 
-        if (loggedIn || isLoginPage || isLoginServlet || isResource) {
+        if (loggedIn) {
             chain.doFilter(request, response);
         } else {
-            res.sendRedirect(loginURI);
+             res.sendRedirect(req.getContextPath() + "/index.jsp");
         }
     }
 }
